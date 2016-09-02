@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <title>CRLF, Edge, and http-server</title>
+        <style>
+            body {
+                font-family: Segoe UI, Verdana;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Description:</h1>
+        <p>The http-server node module may handle CRLF differently than LF. This difference is reflected in HTTP server response headers; content-length specifically.</p>
+        <p>When Microsoft Edge attempts to parse JavaScript in of these CRLF files, it may encounter issues around some comments.</p>
+        <h1>Reproduction Steps:</h1>
+        <ol>
+            <li>Install http-server
+                <p><code>npm install -g http-server</code></p>
+            </li>
+            <li>Create a project directory, and enter it
+                <p><code>mkdir project<br/>cd project</code></p>
+            </li>
+            <li>Start http-server from your project directory
+                <p><code>http-server</code></p>
+            </li>
+            <li>Create an index.html file with the following contents
+                <p><code><pre>&lt;script&gt;
+  var a = {
+    foo: "bar" // comment
+  };
+&lt;/script&gt;</pre></code></p>
+            </li>
+            <li>Set line-endings to CRLF
+                <p><em>In Visual Studio Code, press Ctrl+Shift+P, type "Change End of Line Sequence." Change to CRLF.</em></p>
+            </li>
+            <li>Access index.html in a browser via http://localhost:8080/</li>
+            <li>Press F12 and switch to the Debugger tab</li>
+            <li>Note the presence of an exception</li>
+        </ol>
+        <h1>Alternatively, Clone and Test</h1>
+        <ol>
+            <li><code>git clone https://github.com/jonathansampson/bugs.git</code></li>
+            <li><code>cd crlf-http-server-edge</code></li>
+            <li><code>npm install && http-server -o</code></li>
+        </ol>
+</html>
