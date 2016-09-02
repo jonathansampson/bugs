@@ -6,41 +6,65 @@
             body {
                 font-family: Segoe UI, Verdana;
             }
+            @media ( min-width: 1300 ) {
+                body {
+                    display: flex;
+                }
+                section {
+                    flex: 1;
+                    padding: 0 1em;
+                }
+                img {
+                    max-width: 100%;
+                }
+            }
         </style>
     </head>
     <body>
-        <h1>Description:</h1>
-        <p>The http-server node module may handle CRLF differently than LF. This difference is reflected in HTTP server response headers; content-length specifically.</p>
-        <p>When Microsoft Edge attempts to parse JavaScript in of these CRLF files, it may encounter issues around some comments.</p>
-        <h1>Reproduction Steps:</h1>
-        <ol>
-            <li>Install http-server
-                <p><code>npm install -g http-server</code></p>
-            </li>
-            <li>Create a project directory, and enter it
-                <p><code>mkdir project<br/>cd project</code></p>
-            </li>
-            <li>Start http-server from your project directory
-                <p><code>http-server</code></p>
-            </li>
-            <li>Create an index.html file with the following contents
-                <p><code><pre>&lt;script&gt;
-  var a = {
-    foo: "bar" // comment
-  };
+        <section>
+            <h1>Description:</h1>
+            <p>The http-server node module may handle CRLF differently than LF. This difference is reflected in HTTP server response headers—content-length specifically.</p>
+            <p>When Microsoft Edge attempts to parse JavaScript in of these CRLF files, it may encounter issues around some comments.</p>
+            <img src="screenshot.png" />
+        </section>
+        <section>
+            <h1>Reproduction Steps:</h1>
+            <ol>
+                <li>Install http-server
+                    <p><code>npm install -g http-server</code></p>
+                </li>
+                <li>Create a project directory, and enter it
+                    <p><code>mkdir project<br/>cd project</code></p>
+                </li>
+                <li>Start http-server from your project directory
+                    <p><code>http-server</code></p>
+                </li>
+                <li>Create an index.html file with the following contents
+                    <p><code><pre>&lt;script&gt;
+    var a = {
+        foo: "bar" // comment
+    };
 &lt;/script&gt;</pre></code></p>
-            </li>
-            <li>Set line-endings to CRLF
-                <p><em>In Visual Studio Code, press Ctrl+Shift+P, type "Change End of Line Sequence." Change to CRLF.</em></p>
-            </li>
-            <li>Access index.html in a browser via http://localhost:8080/</li>
-            <li>Press F12 and switch to the Debugger tab</li>
-            <li>Note the presence of an exception</li>
-        </ol>
-        <h1>Alternatively, Clone and Test</h1>
-        <ol>
-            <li><code>git clone https://github.com/jonathansampson/bugs.git</code></li>
-            <li><code>cd crlf-http-server-edge</code></li>
-            <li><code>npm install && http-server -o</code></li>
-        </ol>
+                </li>
+                <li>Set line-endings to CRLF
+                    <p><em>In Visual Studio Code, press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, type "Change End of Line Sequence." Change to CRLF.</em></p>
+                </li>
+                <li>Access index.html in a browser via http://localhost:8080/</li>
+                <li>Press F12 and switch to the Debugger tab</li>
+                <li>Note the presence of an exception</li>
+            </ol>
+        </section>
+        <section>
+            <h1>Alternatively, Clone and Test</h1>
+            <ol>
+                <li><code>git clone https://github.com/jonathansampson/bugs.git</code></li>
+                <li><code>cd .\bugs\crlf-http-server-edge\</code></li>
+                <li><code>npm run test</code></li>
+                <li>Add <code>/test.html</code> to the end of the URL</li>
+                <li>Press F12 to open the Developer Tools</li>
+                <li>Switch to the Debugger tab</li>
+                <li>Press <kbd>Ctrl</kbd>+<kbd>R</kbd> if needed</li>
+            </ol>
+            <p>See screenshot beneath <em>Description</em> for expectation.</p>
+        </section>
 </html>
